@@ -92,10 +92,14 @@ function makeCounter(){
   http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
 */
 
-function counterFactory(){
-  let counter = 0;
-  return function (){
-    return ++counter
+function counterFactory(num){
+  return {
+    inc: function(){
+      return ++num;
+    },
+    dec: function(){
+      return --num;
+    }
   }
 
 }
@@ -118,15 +122,20 @@ counter = counterFactory(10);
 */
 
 function motivation( firstname, lastname ) {
-  var welcomeText = "You're doing awesome, keep it up";
+  let welcomeText = "You're doing awesome, keep it up";
+  // let firstname = firstname;
+  // let lastname = lastname;
 
-  // code message function here.
+  return function message(){
+    return `${welcomeText} ${firstname} ${lastname}.`
+  }  // code message function here.
 
   //Uncommment this to return the value of your message function
   //return message;
 }
 
-var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
+let greeting = motivation('Billy', 'Bob');
+greeting (); // 'You're doing awesome keep it up Billy Bob.
 
 
 
@@ -147,11 +156,14 @@ var module = (function() {
   function privateMethod(){
     return "Hi, I'm " + person.name + ", age " + person.age + " from " + person.location;
   }
+  function publicMethod(){
+    return privateMethod
+  }
 
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
+    // publicMethod();// Code here.
   };
 })();
 
